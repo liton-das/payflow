@@ -7,9 +7,9 @@ const globalErrorHandler = require('./shared/errors/globalErrorHandler')
 
 const app = express()
 
-app.use(cors())
 app.use(express.json())
 app.use(cookieParser())
+app.use(cors())
 app.use('/api/v1',router)
 app.use(notFoundMiddleware)
 app.use(globalErrorHandler)
