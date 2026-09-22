@@ -45,15 +45,6 @@ const login = async (payload)=>{
         userId : user._id,
         role : user.role
     })
-    res.cookie('X-Acc_Token',token,{
-        httpOnly : true,
-        sameSite : 'none',
-        secure : true
-    }).cookie('X-Ref_Token',token,{
-        httpOnly : true,
-        sameSite : 'none',
-        secure : true
-    })
     return {
         user:{
             userId : user._id,

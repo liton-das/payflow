@@ -1,4 +1,5 @@
 const authRoutes = require('../modules/auth/auth.route')
+const userRoute = require('../modules/user/user.route')
 
 const router = require('express').Router()
 router.get('/health',(req,res)=>{
@@ -9,4 +10,6 @@ router.get('/health',(req,res)=>{
 })
 // auth routes
 router.use('/auth',authRoutes)
+// user routes
+router.use('/users',userRoute)
 module.exports = router
