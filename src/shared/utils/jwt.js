@@ -6,8 +6,8 @@ const generateToken = async(payload)=>{
         expiresIn : env.jwtExpire
     })
 }
-const verifyToken = async (token)=>{
-    return await jwt.verify(token,env.jwtSecret)
+const verifyToken =  (token)=>{
+    return  jwt.verify(token,env.jwtSecret)
 }
 module.exports = {
     generateToken,
