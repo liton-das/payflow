@@ -1,4 +1,5 @@
 const authRoutes = require('../modules/auth/auth.route')
+const { orderRoutes } = require('../modules/order/order.route')
 const productRoute = require('../modules/product/product.route')
 const userRoute = require('../modules/user/user.route')
 
@@ -15,4 +16,6 @@ router.use('/auth',authRoutes)
 router.use('/users',userRoute)
 // product routes
 router.use('/products',productRoute)
+// order routes
+router.use('/orders',orderRoutes)
 module.exports = router
