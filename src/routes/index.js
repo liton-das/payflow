@@ -1,7 +1,7 @@
 const authRoutes = require('../modules/auth/auth.route')
-const { orderRoutes } = require('../modules/order/order.route')
 const productRoute = require('../modules/product/product.route')
 const userRoute = require('../modules/user/user.route')
+const { orderRoutes } = require('../modules/order/order.route')
 
 const router = require('express').Router()
 router.get('/health',(req,res)=>{
