@@ -1,6 +1,6 @@
 const AppError = require("../../shared/errors/AppError")
 const { findProductById } = require("../product/product.repository")
-const { createOrder, findOrderByUser, findOrderById } = require("./oder.repository")
+const { createOrder, findOrderByUser, findOrderById, findAllOrders } = require("./oder.repository")
 
 const createOrderService = async(userId,payload)=>{
     const orderItems = []
@@ -51,11 +51,28 @@ const getMyorderById = async(userId,orderId)=>{
     }
     return order
 }
-
+// Get all orders by ADMIN
+const getAllOrders = async()=>{
+    const result =  await findAllOrders()
+    if(!result){
+        throw new AppError(404,'Orders not found!')
+    }
+    return result
+}
+// Get single order by ID
+const getOrderById = async(orderId)=>{
+    const order = await findOrderById(orderId)
+    if(!order){
+        throw new AppError(404,'Order not found!')
+    }
+    return order
+}
 
 
 module.exports ={
     createOrderService,
     getMyOrders,
-    getMyorderById
+    getMyorderById,
+    getAllOrders,
+    getOrderById
 }
