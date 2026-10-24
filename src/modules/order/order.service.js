@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose")
 const AppError = require("../../shared/errors/AppError")
 const { findProductById } = require("../product/product.repository")
 const { createOrder, findOrderByUser, findOrderById, findAllOrders } = require("./oder.repository")
@@ -5,8 +6,21 @@ const { createOrder, findOrderByUser, findOrderById, findAllOrders } = require("
 const createOrderService = async(userId,payload)=>{
     const orderItems = []
     let totalAmount = 0
+    let quantityByProduct = new map()
 
     for(const item of payload.items){
+        const currentQuantity = quantityByProduct.get(item.product) ?? 0
+        quantityByProduct.set(item.product,currentQuantity + item.quantity)
+    }
+    const normalizedItems = Array.from(
+        quantityByProduct,
+        ([product,quantity])=>({
+            product,
+            quantity
+        })
+    )
+
+    for(const item of normalizedItems){
         const product = await findProductById(item.product)
 
         if(!product){
@@ -41,6 +55,9 @@ const getMyOrders = async(userId)=>{
     return findOrderByUser(userId)
 }
 const getMyorderById = async(userId,orderId)=>{
+    if(!mongoose.isValidObjectId(orderId)){
+        throw new AppError(400,'Invalid order ID')
+    }
     const order = await findOrderById(orderId)
     if(!order){
         throw new AppError(404,'Order not found!')
@@ -62,6 +79,9 @@ const getAllOrders = async()=>{
 // Get single order by ID
 const getOrderById = async(orderId)=>{
     const order = await findOrderById(orderId)
+    if(!mongoose.isValidObjectId(orderId)){
+        throw new AppError(400,'Invalid order ID')
+    }
     if(!order){
         throw new AppError(404,'Order not found!')
     }

@@ -1,13 +1,10 @@
 const z = require('zod')
-
+const objectIdSchema = z.string().regex(/^[0-9a-fA-F]{24}$/,'Invalid MongoDB ObjectId')
 const createOrderValidationSchema = z.object({
   items: z
     .array(
       z.object({
-        product: z
-          .string()
-          .min(1, "Product ID is required"),
-
+        product: objectIdSchema,
         quantity: z
           .number()
           .int("Quantity must be an integer")
